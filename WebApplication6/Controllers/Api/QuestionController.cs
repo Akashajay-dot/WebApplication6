@@ -23,27 +23,25 @@ namespace WebApplication6.Controllers.Api
             var today = DateTime.Today;
             var yesterday = today.AddDays(-1);
 
-            // Mark previous day's question as inactive
            MarkPreviousDayQuestionAsInactive(yesterday);
-
-            // Find the question scheduled for today
+            
             var dailyQuestion = db.Questions
-                .Where(q => DbFunctions.TruncateTime(q.QuestionDate) == today && q.IsActive)
+                .Where(q => DbFunctions.TruncateTime(q.QuestionDate) == today && q.IsActive && q.IsApproved)
                 .Select(q => new
-                {
+                {   
                     Question = q,
                     AnswerOptions = db.AnswerOptions.Where(a => a.QuestionId == q.QuestionId).ToList(),
                     AnswerKeys = db.AnswerKeys.Where(k => k.QuestionId == q.QuestionId).ToList(),
-                    
+                   
+
+
                 })
                 .FirstOrDefault();
 
             if (dailyQuestion == null)
             {
-                // Handle case where no question is available for today
-                return NotFound(); // Or any appropriate response
+                return NotFound(); 
             }
-            // return Ok(new { HasAnswered = true, DailyQuestion = dailyQuestion });
             var userResponse = db.UserResponse
                 .FirstOrDefault(ur => ur.UserId == userId && ur.QuestionId == dailyQuestion.Question.QuestionId);
             if (userResponse != null)

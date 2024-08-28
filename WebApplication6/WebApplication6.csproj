@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebApplication6</RootNamespace>
-    <AssemblyName>WebApplication6</AssemblyName>
+    <AssemblyName>chr</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -130,6 +130,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
@@ -378,10 +384,22 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\Api\adminApproveController.cs" />
     <Compile Include="Controllers\Api\AuthController.cs" />
+    <Compile Include="Controllers\Api\CheckController.cs" />
+    <Compile Include="Controllers\Api\CountController.cs" />
+    <Compile Include="Controllers\Api\DatesetController.cs" />
+    <Compile Include="Controllers\Api\DeleteController.cs" />
+    <Compile Include="Controllers\Api\EditQuestionController.cs" />
+    <Compile Include="Controllers\Api\FetchQuestionController.cs" />
     <Compile Include="Controllers\Api\PostQuestionsController.cs" />
     <Compile Include="Controllers\Api\PostResponseController.cs" />
+    <Compile Include="Controllers\Api\PreviousController.cs" />
+    <Compile Include="Controllers\Api\QBController.cs" />
     <Compile Include="Controllers\Api\QuestionController.cs" />
+    <Compile Include="Controllers\Api\QuestiondateController.cs" />
+    <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="Controllers\Api\UserDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -431,6 +449,42 @@
     <Compile Include="Migrations\202407310627410_new5.Designer.cs">
       <DependentUpon>202407310627410_new5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202408050646122_addedIsAdminToUser.cs" />
+    <Compile Include="Migrations\202408050646122_addedIsAdminToUser.Designer.cs">
+      <DependentUpon>202408050646122_addedIsAdminToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271446106_profile.cs" />
+    <Compile Include="Migrations\202408271446106_profile.Designer.cs">
+      <DependentUpon>202408271446106_profile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271455220_profile2.cs" />
+    <Compile Include="Migrations\202408271455220_profile2.Designer.cs">
+      <DependentUpon>202408271455220_profile2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271525157_profile3.cs" />
+    <Compile Include="Migrations\202408271525157_profile3.Designer.cs">
+      <DependentUpon>202408271525157_profile3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271535107_profile4.cs" />
+    <Compile Include="Migrations\202408271535107_profile4.Designer.cs">
+      <DependentUpon>202408271535107_profile4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271616265_removeduserid.cs" />
+    <Compile Include="Migrations\202408271616265_removeduserid.Designer.cs">
+      <DependentUpon>202408271616265_removeduserid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271624516_removeduserid2.cs" />
+    <Compile Include="Migrations\202408271624516_removeduserid2.Designer.cs">
+      <DependentUpon>202408271624516_removeduserid2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271625563_removeduserid3.cs" />
+    <Compile Include="Migrations\202408271625563_removeduserid3.Designer.cs">
+      <DependentUpon>202408271625563_removeduserid3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408271626346_removeduserid4.cs" />
+    <Compile Include="Migrations\202408271626346_removeduserid4.Designer.cs">
+      <DependentUpon>202408271626346_removeduserid4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnswerKey.cs" />
     <Compile Include="Models\AnswerOption.cs" />
@@ -441,9 +495,6 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DailyEmailJob.cs" />
-    <Compile Include="Services\MailerSendService.cs" />
-    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -619,6 +670,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407310627410_new5.resx">
       <DependentUpon>202407310627410_new5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408050646122_addedIsAdminToUser.resx">
+      <DependentUpon>202408050646122_addedIsAdminToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271446106_profile.resx">
+      <DependentUpon>202408271446106_profile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271455220_profile2.resx">
+      <DependentUpon>202408271455220_profile2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271525157_profile3.resx">
+      <DependentUpon>202408271525157_profile3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271535107_profile4.resx">
+      <DependentUpon>202408271535107_profile4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271616265_removeduserid.resx">
+      <DependentUpon>202408271616265_removeduserid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271624516_removeduserid2.resx">
+      <DependentUpon>202408271624516_removeduserid2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271625563_removeduserid3.resx">
+      <DependentUpon>202408271625563_removeduserid3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408271626346_removeduserid4.resx">
+      <DependentUpon>202408271626346_removeduserid4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

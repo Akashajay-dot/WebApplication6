@@ -11,11 +11,12 @@ namespace WebApplication6.Models
     {
         [Key]
         public int ReputationMasterId { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public int MinPoints { get; set; }
+
+
 
         public int UptoPoints { get; set;}
+
         public string Badge  { get; set; }
 
     }

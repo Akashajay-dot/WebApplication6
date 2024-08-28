@@ -21,7 +21,6 @@ namespace WebApplication6.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            // Check if CategoryId exists
             var category = db.Categories.SingleOrDefault(c => c.CategoryId == questionDto.CategoryId);
             if (category == null)
             {
@@ -33,7 +32,6 @@ namespace WebApplication6.Controllers.Api
                 return BadRequest("Invalid AuthorId");
             }   
 
-            // Create a new Question entity
             var question = new Questions
             {
                 Question = questionDto.Question,
@@ -48,13 +46,12 @@ namespace WebApplication6.Controllers.Api
                 SnapShot = questionDto.SnapShot,
                 LastUpdatedOn = questionDto.LastUpdatedOn,
                 LastUpdatedBy = questionDto.LastUpdatedBy,
-                IsActive= false,
+                IsActive= true,
             };
 
             db.Questions.Add(question);
             db.SaveChanges();
 
-            // Save AnswerOptions
             foreach (var option in questionDto.Answers)
             {
                 var answerOption = new AnswerOption
@@ -66,7 +63,6 @@ namespace WebApplication6.Controllers.Api
                 db.AnswerOptions.Add(answerOption);
                 db.SaveChanges();
 
-                // Save AnswerKey if isCorrect
                 if (option.IsCorrect)
                 {
                     var answerKey = new AnswerKey
@@ -99,7 +95,7 @@ namespace WebApplication6.Controllers.Api
         public DateTime LastUpdatedOn { get; set; }
         public string LastUpdatedBy { get; set; }
         public bool IsActive { get; set; }
-        public List<AnswerDto> Answers { get; set; }
+        public List<AnswerDto2> Answers { get; set; }
     }
 
     public class AnswerDto

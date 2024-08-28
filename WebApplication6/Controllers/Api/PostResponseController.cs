@@ -44,9 +44,11 @@ namespace WebApplication6.Controllers.Api
                 db.UserResponse.Add(userResponse);
 
             }
-            
-            
-            
+           
+
+
+
+
 
             db.SaveChanges();
             return Ok();

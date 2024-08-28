@@ -10,6 +10,8 @@ using Google;
 using WebApplication6.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using Microsoft.Exchange.WebServices.Data;
 
 
 
@@ -37,7 +39,7 @@ namespace WebApplication6.Controllers.Api
             try
             {
                 var payload = await GoogleJsonWebSignature.ValidateAsync(tokenDto.Credential);
-                var user = await _context.Users.SingleOrDefaultAsync(u => u.GoogleId == payload.Subject);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.GoogleId == payload.Subject);
 
                 if (user == null)
                 {
@@ -45,9 +47,10 @@ namespace WebApplication6.Controllers.Api
                     {
                         GoogleId = payload.Subject,
                         Name = payload.Name,
+                        Pic = payload.Picture,
                         CreatedON = DateTime.UtcNow,
                         UpdatedON = DateTime.UtcNow,
-                        Email=payload.Email,
+                        
 
                     };
                     _context.Users.Add(user);
@@ -57,32 +60,40 @@ namespace WebApplication6.Controllers.Api
                 {
                     user.UpdatedON = DateTime.UtcNow;
                     await _context.SaveChangesAsync();
+                   
+                   
                 }
+                var userRank = _context.Users
+                   .Where(u => u.Points > _context.Users
+                   .Where(us => us.UserId == user.UserId).Select(us => us.Points).FirstOrDefault())
+                   .Count() + 1;
+                var totalUsers = _context.Users.Count();
 
                 return base.Ok(new
                 {
                    Isvalid = true,
                    Payload = payload,
                    UserId = user.UserId,
-                   category = _context.Categories
+                   isAdmin = user.IsAdmin,
+                   category = _context.Categories,
+                    userRank= userRank,
+                    totalUsers= totalUsers,
+
                 });
             }
             catch (InvalidJwtException e)
             {
-                //return Unauthorized(new { message = "Invalid token", error = e.Message });
                 var response = Request.CreateResponse(HttpStatusCode.Unauthorized, new
                 {
                    
                     message = "Invalid token",
                     error = e.Message
-                    
                 });
 
                 return ResponseMessage(response);
             }
             catch (DbUpdateException ex)
             {
-                // Log the detailed error
                 var detailedErrorMessage = ex.InnerException?.InnerException?.Message ?? ex.Message;
 
                 var response = Request.CreateResponse(HttpStatusCode.InternalServerError, new
@@ -95,13 +106,11 @@ namespace WebApplication6.Controllers.Api
             }
             catch (Exception ex)
             {
-                // Log unexpected errors
-                //return InternalServerError(new { message = "An error occurred", error = ex.Message });
-                // return StatusCode(500, new { message = "An error occurred", error = ex.Message });
                 var response = Request.CreateResponse(HttpStatusCode.InternalServerError, new
                 {
                     message = "An unexpected error occurred.",
-                    error = ex.Message  // You can choose to expose ex.Message or keep it generic for security
+                    error = ex.Message  ,
+                    err= tokenDto.Credential
                 });
 
                 return ResponseMessage(response);

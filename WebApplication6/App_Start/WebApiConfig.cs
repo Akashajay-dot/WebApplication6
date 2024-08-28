@@ -12,9 +12,6 @@ namespace WebApplication6
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Web API routes
             UnityConfig.RegisterComponents();
 
             var cors = new EnableCorsAttribute("http://localhost:3000", "*", "*");
